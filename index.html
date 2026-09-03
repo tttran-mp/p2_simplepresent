@@ -4,22 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simple Present Tense Challenge</title>
+  <!-- 導入可愛、圓潤的字體 -->
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #3b82f6;
-      --primary-hover: #2563eb;
-      --correct-color: #22c55e;
-      --wrong-color: #ef4444;
-      --bg-color: #f0fdf4;
+      /* 更新為更可愛、柔和的色調 */
+      --primary-color: #5cc9f5; /* 可愛的淺藍色 */
+      --primary-hover: #ff75c3; /* 可愛相容的粉色 */
+      --correct-color: #4cd964;
+      --wrong-color: #ff3b30;
+      --bg-color: #e0f7fa; /* 淺藍色背景 */
       --card-bg: #ffffff;
-      --text-color: #1e293b;
+      --text-color: #1a2a3b;
+      --accent-color: #ffd60a; /* 星星或獎盃的金色 */
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      /* 使用導入的可愛字體 */
+      font-family: 'Varela Round', sans-serif;
     }
 
     body {
@@ -34,28 +39,29 @@
 
     .game-container {
       background-color: var(--card-bg);
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-radius: 25px; /* 更圓潤的邊角 */
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
       width: 100%;
-      max-width: 600px;
-      padding: 24px;
+      max-width: 650px; /* 稍微寬一點以容納新的裝飾 */
+      padding: 30px;
       position: relative;
       overflow: hidden;
     }
 
     header {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     h1 {
       color: var(--primary-color);
-      font-size: 1.8rem;
-      margin-bottom: 4px;
+      font-size: 2rem;
+      margin-bottom: 6px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* 增加一點層次感 */
     }
 
     .subtitle {
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: #64748b;
     }
 
@@ -63,32 +69,34 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       font-weight: 600;
       font-size: 1.1rem;
     }
 
-    .badge {
-      background-color: #e0f2fe;
+    /* 將狀態欄徽章設計得更像遊戲道具 */
+    .badge, .timer-badge {
+      background-color: #ffffff;
       color: #0369a1;
-      padding: 6px 14px;
-      border-radius: 12px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 3px solid #e2e8f0; /* 增加邊框感 */
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
     }
 
     .timer-badge {
-      background-color: #fef3c7;
       color: #b45309;
-      padding: 6px 14px;
-      border-radius: 12px;
+      border-color: #fef3c7;
     }
 
     .progress-bar-container {
       width: 100%;
-      height: 10px;
+      height: 12px; /* 稍微加粗一點 */
       background-color: #e2e8f0;
-      border-radius: 5px;
-      margin-bottom: 24px;
+      border-radius: 6px;
+      margin-bottom: 30px;
       overflow: hidden;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
     }
 
     .progress-bar {
@@ -96,35 +104,36 @@
       width: 100%;
       background-color: var(--primary-color);
       transition: width 0.1s linear;
+      border-radius: 6px;
     }
 
     .question-card {
-      background-color: #f8fafc;
-      border: 2px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 20px;
+      background-color: #f0fdf4; /* 淡淡的綠色，代表學習 */
+      border: 3px solid #c3eec8;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 25px;
       text-align: center;
     }
 
     .question-text {
-      font-size: 1.3rem;
+      font-size: 1.5rem; /* 更大的字體 */
       font-weight: 600;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .blank {
       display: inline-block;
-      min-width: 80px;
-      border-bottom: 3px solid var(--primary-color);
+      min-width: 90px;
+      border-bottom: 4px solid var(--primary-color);
       color: var(--primary-color);
-      padding: 0 6px;
+      padding: 0 8px;
     }
 
     .options-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 15px; /* 更大的間距 */
     }
 
     @media (max-width: 480px) {
@@ -133,22 +142,30 @@
       }
     }
 
+    /* 讓按鈕看起來更可愛、更立體 */
     .option-btn {
       background-color: #ffffff;
-      border: 2px solid #cbd5e1;
-      border-radius: 12px;
-      padding: 14px 10px;
-      font-size: 1.1rem;
+      border: 3px solid #cbd5e1;
+      border-radius: 15px;
+      padding: 16px 12px;
+      font-size: 1.2rem;
       font-weight: 600;
       color: var(--text-color);
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.2s ease, transform 0.1s ease;
+      box-shadow: 0 4px 0 #cbd5e1; /* 增加3D效果 */
     }
 
     .option-btn:hover:not(:disabled) {
       border-color: var(--primary-color);
-      background-color: #eff6ff;
-      transform: translateY(-2px);
+      background-color: #f0f9ff;
+      color: var(--primary-color);
+    }
+
+    /* 按下按鈕時的下沉效果 */
+    .option-btn:active:not(:disabled) {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #cbd5e1;
     }
 
     .option-btn:disabled {
@@ -158,23 +175,25 @@
     .option-btn.correct {
       background-color: var(--correct-color);
       color: #ffffff;
-      border-color: var(--correct-color);
+      border-color: #3cb44e;
+      box-shadow: 0 4px 0 #3cb44e;
     }
 
     .option-btn.wrong {
       background-color: var(--wrong-color);
       color: #ffffff;
-      border-color: var(--wrong-color);
+      border-color: #d13025;
+      box-shadow: 0 4px 0 #d13025;
     }
 
-    /* Modal Styling */
+    /* 可愛的彈出視窗（結果螢幕） */
     .modal-overlay {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.65);
+      background-color: rgba(26, 42, 59, 0.85); /* 更深的疊加，突出身片 */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -190,54 +209,80 @@
     }
 
     .modal-content {
-      background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('happy.jpg');
-      background-size: cover;
-      background-position: center;
-      border-radius: 20px;
-      padding: 30px 20px;
+      background-color: #ffffff;
+      border-radius: 25px;
+      padding: 40px;
       text-align: center;
       width: 100%;
-      max-width: 450px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    /* 嵌入照片的樣式 */
+    .result-image {
+      width: 100%;
+      max-width: 350px; /* 確保圖片大小適中 */
+      height: auto;
+      margin-bottom: 25px;
+      border-radius: 20px;
+      border: 5px solid var(--accent-color); /* 金色星星邊框，代表獎盃 */
+      box-shadow: 0 8px 15px rgba(0,0,0,0.1);
     }
 
     .modal-title {
-      font-size: 2rem;
-      color: #1e3a8a;
+      font-size: 2.2rem;
+      color: var(--primary-hover); /* 使用可愛的粉色 */
+      margin-bottom: 15px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    /* 鼓勵話語的樣式 */
+    .encouraging-phrase {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #047857;
       margin-bottom: 10px;
+      min-height: 1.6em; /* 預留高度以免內容長短導致跳動 */
     }
 
     .modal-score {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       font-weight: 700;
-      color: #047857;
-      margin-bottom: 24px;
+      color: #1e3a8a;
+      margin-bottom: 30px;
     }
 
     .restart-btn {
       background-color: var(--primary-color);
       color: #ffffff;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       font-weight: 600;
-      padding: 12px 32px;
+      padding: 14px 40px;
       border: none;
-      border-radius: 30px;
+      border-radius: 35px;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
-      transition: all 0.2s ease;
+      box-shadow: 0 6px 0 #3cb44e; /* 對應正確顏色的立體感 */
+      transition: all 0.2s ease, transform 0.1s ease;
+      background-color: var(--correct-color); /* 改為綠色，代表再來一次 */
     }
 
     .restart-btn:hover {
-      background-color: var(--primary-hover);
-      transform: scale(1.05);
+      background-color: #3cb44e;
     }
+
+    .restart-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #3cb44e;
+    }
+
   </style>
 </head>
 <body>
 
   <div class="game-container">
     <header>
-      <h1>Simple Present Tense Challenge</h1>
+      <h1>⭐️ Simple Present Tense Challenge ⭐️</h1>
       <p class="subtitle">Daily Grammar Practice for Primary 2</p>
     </header>
 
@@ -257,67 +302,32 @@
 
     <div class="options-grid" id="options-grid"></div>
 
+    <!-- 結果彈出視窗 -->
     <div class="modal-overlay" id="modal-overlay">
       <div class="modal-content">
-        <h2 class="modal-title">Great Job!</h2>
+        <!-- 嵌入的學生加油照片 -->
+        <img src="students_trophy.png" alt="Cheering Students!" class="result-image">
+        <h2 class="modal-title" id="result-title">Great Job!</h2>
+        <!-- 用於顯示動態鼓勵話語的容器 -->
+        <p class="encouraging-phrase" id="encouraging-phrase"></p>
         <p class="modal-score" id="final-score">Your Score: 10 / 10</p>
-        <button class="restart-btn" onclick="restartGame()">Play Again</button>
+        <button class="restart-btn" onclick="restartGame()" id="restart-btn">Play Again</button>
       </div>
     </div>
   </div>
 
   <script>
     const questionsDatabase = [
-      {
-        sentence: ["Mum ", " to work on Mondays."],
-        options: ["works", "work", "is working", "workes"],
-        answer: 0
-      },
-      {
-        sentence: ["Peter ", " milk every morning."],
-        options: ["drinks", "drink", "is drinking", "drinkes"],
-        answer: 0
-      },
-      {
-        sentence: ["They ", " football every Sunday."],
-        options: ["play", "plays", "are playing", "playes"],
-        answer: 0
-      },
-      {
-        sentence: ["I ", " my teeth twice a day."],
-        options: ["brush", "brushes", "am brushing", "brushs"],
-        answer: 0
-      },
-      {
-        sentence: ["The sun ", " in the east."],
-        options: ["rises", "rise", "is rising", "risese"],
-        answer: 0
-      },
-      {
-        sentence: ["We ", " to school by bus every day."],
-        options: ["go", "goes", "are going", "gos"],
-        answer: 0
-      },
-      {
-        sentence: ["My cat ", " fish every afternoon."],
-        options: ["eats", "eat", "is eating", "eates"],
-        answer: 0
-      },
-      {
-        sentence: ["Mary ", " TV on Saturday nights."],
-        options: ["watches", "watch", "is watching", "watchs"],
-        answer: 0
-      },
-      {
-        sentence: ["The dogs ", " loudly at night."],
-        options: ["bark", "barks", "are barking", "barkes"],
-        answer: 0
-      },
-      {
-        sentence: ["Tim ", " his homework every day."],
-        options: ["does", "do", "is doing", "doeses"],
-        answer: 0
-      }
+      { sentence: ["Mum ", " to work on Mondays."], options: ["works", "work", "is working", "workes"], answer: 0 },
+      { sentence: ["Peter ", " milk every morning."], options: ["drinks", "drink", "is drinking", "drinkes"], answer: 0 },
+      { sentence: ["They ", " football every Sunday."], options: ["play", "plays", "are playing", "playes"], answer: 0 },
+      { sentence: ["I ", " my teeth twice a day."], options: ["brush", "brushes", "am brushing", "brushs"], answer: 0 },
+      { sentence: ["The sun ", " in the east."], options: ["rises", "rise", "is rising", "risese"], answer: 0 },
+      { sentence: ["We ", " to school by bus every day."], options: ["go", "goes", "are going", "gos"], answer: 0 },
+      { sentence: ["My cat ", " fish every afternoon."], options: ["eats", "eat", "is eating", "eates"], answer: 0 },
+      { sentence: ["Mary ", " TV on Saturday nights."], options: ["watches", "watch", "is watching", "watchs"], answer: 0 },
+      { sentence: ["The dogs ", " loudly at night."], options: ["bark", "barks", "are barking", "barkes"], answer: 0 },
+      { sentence: ["Tim ", " his homework every day."], options: ["does", "do", "is doing", "doeses"], answer: 0 }
     ];
 
     let currentQuestions = [];
@@ -326,39 +336,31 @@
     let timer = null;
     let timeLeft = 10;
 
-    // Web Audio API for sound effects
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
     function playSound(isCorrect) {
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       osc.connect(gain);
       gain.connect(audioCtx.destination);
-
       if (isCorrect) {
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
-        osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+        osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+        osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
         gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.3);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.3);
       } else {
         osc.type = 'sawtooth';
         osc.frequency.setValueAtTime(180, audioCtx.currentTime);
         gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.3);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.3);
       }
     }
 
-    function shuffleArray(array) {
-      return array.sort(() => Math.random() - 0.5);
-    }
+    function shuffleArray(array) { return array.sort(() => Math.random() - 0.5); }
 
     function initGame() {
       currentQuestions = JSON.parse(JSON.stringify(questionsDatabase));
@@ -370,109 +372,107 @@
       currentQuestions = shuffleArray(currentQuestions).slice(0, 10);
       currentQuestionIndex = 0;
       score = 0;
-      
       document.getElementById('modal-overlay').classList.remove('active');
       updateScoreDisplay();
       loadQuestion();
     }
 
     function loadQuestion() {
-      clearInterval(timer);
-      timeLeft = 10;
-      updateTimerDisplay();
-
+      clearInterval(timer); timeLeft = 10; updateTimerDisplay();
       const q = currentQuestions[currentQuestionIndex];
       document.getElementById('question-count').textContent = `Question: ${currentQuestionIndex + 1} / 10`;
       document.getElementById('question-text').innerHTML = `${q.sentence[0]}<span class="blank">____</span>${q.sentence[1]}`;
-
-      const optionsGrid = document.getElementById('options-grid');
-      optionsGrid.innerHTML = '';
-
+      const optionsGrid = document.getElementById('options-grid'); optionsGrid.innerHTML = '';
       q.options.forEach((optionText, index) => {
         const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.textContent = optionText;
+        btn.className = 'option-btn'; btn.textContent = optionText;
         btn.onclick = () => selectOption(index);
         optionsGrid.appendChild(btn);
       });
-
       startTimer();
     }
 
     function startTimer() {
-      const progressBar = document.getElementById('progress-bar');
-      progressBar.style.width = '100%';
-      
+      const progressBar = document.getElementById('progress-bar'); progressBar.style.width = '100%';
       timer = setInterval(() => {
         timeLeft -= 0.1;
-        if (timeLeft <= 0) {
-          timeLeft = 0;
-          clearInterval(timer);
-          handleTimeout();
-        }
-        updateTimerDisplay();
-        progressBar.style.width = `${(timeLeft / 10) * 100}%`;
+        if (timeLeft <= 0) { timeLeft = 0; clearInterval(timer); handleTimeout(); }
+        updateTimerDisplay(); progressBar.style.width = `${(timeLeft / 10) * 100}%`;
       }, 100);
     }
 
-    function updateTimerDisplay() {
-      document.getElementById('timer-display').textContent = `Time: ${Math.ceil(timeLeft)}s`;
-    }
-
-    function updateScoreDisplay() {
-      document.getElementById('score-display').textContent = `Score: ${score}`;
-    }
+    function updateTimerDisplay() { document.getElementById('timer-display').textContent = `Time: ${Math.ceil(timeLeft)}s`; }
+    function updateScoreDisplay() { document.getElementById('score-display').textContent = `Score: ${score}`; }
 
     function selectOption(selectedIndex) {
       clearInterval(timer);
       const q = currentQuestions[currentQuestionIndex];
       const buttons = document.querySelectorAll('.option-btn');
-      
       buttons.forEach(btn => btn.disabled = true);
-
       if (selectedIndex === q.answer) {
-        score++;
-        buttons[selectedIndex].classList.add('correct');
-        playSound(true);
+        score++; buttons[selectedIndex].classList.add('correct'); playSound(true);
       } else {
-        buttons[selectedIndex].classList.add('wrong');
-        buttons[q.answer].classList.add('correct');
-        playSound(false);
+        buttons[selectedIndex].classList.add('wrong'); buttons[q.answer].classList.add('correct'); playSound(false);
       }
-
-      updateScoreDisplay();
-      setTimeout(nextQuestion, 1200);
+      updateScoreDisplay(); setTimeout(nextQuestion, 1200);
     }
 
     function handleTimeout() {
       const q = currentQuestions[currentQuestionIndex];
       const buttons = document.querySelectorAll('.option-btn');
-      
       buttons.forEach(btn => btn.disabled = true);
-      buttons[q.answer].classList.add('correct');
-      playSound(false);
-
+      buttons[q.answer].classList.add('correct'); playSound(false);
       setTimeout(nextQuestion, 1200);
     }
 
     function nextQuestion() {
       currentQuestionIndex++;
-      if (currentQuestionIndex < currentQuestions.length) {
-        loadQuestion();
-      } else {
-        showEndGameModal();
-      }
+      if (currentQuestionIndex < currentQuestions.length) loadQuestion();
+      else showEndGameModal();
     }
 
+    // 將鼓勵話語根據得分分類，並與按鈕文字配對
+    const discouragingDataByScore = {
+      low: {
+        phrase: ["Keep Trying! Learning is Fun!", "Good Try! Practicing Helps Us Learn!", "Almost There! Let's Try Again!"],
+        btn: "Try Again, Superstar!"
+      },
+      medium: {
+        phrase: ["Way to Go! Great Progress!", "Super Work! You're Getting Better!", "Well Done! Almost a Perfect Score!"],
+        btn: "Play Again, Master!"
+      },
+      high: {
+        phrase: ["Fantastic! You're a Tense Master!", "English Master! We're So Proud of You!", "Perfect Score! Amazing Work, Hero!"],
+        btn: "Play Again, English Hero!"
+      }
+    };
+
     function showEndGameModal() {
-      document.getElementById('final-score').textContent = `Your Score: ${score} / 10`;
+      let finalPhrase = "";
+      let buttonLabel = "";
+
+      // 根據得分決定話語的類別和按鈕文字
+      if (score <= 3) {
+        finalPhrase = discouragingDataByScore.low.phrase[Math.floor(Math.random() * discouragingDataByScore.low.phrase.length)];
+        buttonLabel = discouragingDataByScore.low.btn;
+      } else if (score <= 7) {
+        finalPhrase = discouragingDataByScore.medium.phrase[Math.floor(Math.random() * discouragingDataByScore.medium.phrase.length)];
+        buttonLabel = discouragingDataByScore.medium.btn;
+      } else {
+        finalPhrase = discouragingDataByScore.high.phrase[Math.floor(Math.random() * discouragingDataByScore.high.phrase.length)];
+        buttonLabel = discouragingDataByScore.high.btn;
+      }
+
+      // 更新 DOM
+      document.getElementById('result-title').textContent = (score === 10) ? "Amazing Perfect Score!" : "Well Done!";
+      document.getElementById('encouraging-phrase').textContent = finalPhrase;
+      document.getElementById('final-score').textContent = `Total Score: ${score} / 10`;
+      document.getElementById('restart-btn').textContent = buttonLabel; // 更新按鈕文字
+
       document.getElementById('modal-overlay').classList.add('active');
     }
 
-    function restartGame() {
-      initGame();
-    }
-
+    function restartGame() { initGame(); }
     window.onload = initGame;
   </script>
 </body>
